@@ -121,15 +121,15 @@ class Classifier:
         start_time = time.time()
 
         self.num_ferns = j
-        self.num_bins = 2 ** m
+        self.num_bins = 2 ** m()
 
         self.data = np.ndarray((j, 3, 1), dtype=int)
         data_ptr = self.data.flat
 
         for i in range(j):
-            u = np.floor((self.object_height - s) * rnd.random())
-            v = np.floor((self.object_width - s) * rnd.random())
-            w = np.floor(r * rnd.random())
+            u = np.floor((self.object_height - s()) * rnd.random())
+            v = np.floor((self.object_width - s()) * rnd.random())
+            w = np.floor(r() * rnd.random())
 
             data_ptr[i * 3 + 0] = u
             data_ptr[i * 3 + 1] = v

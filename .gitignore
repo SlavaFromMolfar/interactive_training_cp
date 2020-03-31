@@ -1,3 +1,5 @@
 build/*
 cmake-build-debug/*
 venv/*
+
+/detector/detect.cpython-38-x86_64-linux-gnu.so

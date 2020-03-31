@@ -49,7 +49,7 @@ if __name__ == '__main__':
     img_height = parameters.get_image_height()
 
     # Random ferns initialization
-    random_ferns = RandomFerns()
+    random_ferns = detect.RandomFerns()
     random_ferns.compute(parameters.get_pool_size(), parameters.get_num_features(), parameters.get_fern_size(),
                          parameters.get_num_image_channels())
     random_ferns.print()

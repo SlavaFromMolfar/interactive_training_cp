@@ -13,8 +13,8 @@ def train_classifier(parameters, classifier, random_ferns, frame, rectangle):
     classifier.set_object_size(object_height, object_width)
     classifier.threshold = parameters.get_threshold()
 
-    classifier.compute(parameters.get_num_ferns(), random_ferns.pool_size, random_ferns.num_feats,
-                       random_ferns.fern_size)
+    classifier.compute(parameters.get_num_ferns(), random_ferns.getPoolSize, random_ferns.getNumFeats,
+                       random_ferns.getFernSize)
     classifier.print()
     # cv2.waitKey(0)
 
@@ -22,6 +22,8 @@ def train_classifier(parameters, classifier, random_ferns, frame, rectangle):
                               rectangle[0]: rectangle[0] + rectangle[2]],
                               (object_model_size, object_model_size))
     classifier.object_model = object_model
+
+    print('End of the train')
 
     # TODO: replace with c++
     # update_positive_samples(frame, rectangle, classifier, random_ferns, train_samples, varphi)

@@ -2,6 +2,7 @@
 #define DET_CLASSIFIER_H
 
 #include <opencv2/core.hpp>
+#include <pybind11/numpy.h>
 
 class Classifier {
 private:
@@ -24,11 +25,11 @@ public:
     int get_num_ferns();  // get num. random ferns (J)
     float get_threshold();  // return classifier threshold (beta)
     cv::Mat get_posHstms();  // pointer to positive fern distributions
-    py::array_t<double> get_posHstms_np();  // pointer to positive fern distributions
+    pybind11::array_t<double> get_posHstms_np();  // pointer to positive fern distributions
     cv::Mat get_negHstms();  // pointer to negative fern distributions
-    py::array_t<double> get_negHstms_np();  // pointer to negative fern distributions
+    pybind11::array_t<double> get_negHstms_np();  // pointer to negative fern distributions
     cv::Mat get_ratHstms();  // pointer to ratio of fern distributions
-    py::array_t<double> get_ratHstms_np();  // pointer to ratio of fern distributions
+    pybind11::array_t<double> get_ratHstms_np();  // pointer to ratio of fern distributions
     void set_threshold(float beta);  // set detector threshold (beta)
     void update(cv::Mat &mapx, float y);  // update the object classifier
     void set_object_size(int Bu, int Bv);  // set object size (Bu,Bv)
