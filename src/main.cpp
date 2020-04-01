@@ -9,6 +9,9 @@
 #include "wrappers/fernMaps.cpp"
 #include "wrappers/wrappers.cpp"
 #include "wrappers/randomFerns.cpp"
+#include "wrappers/cvMatToNumpy.h"
+#include "wrappers/cvMatToNumpy.cpp"
+#include "wrappers/NumpyToCvMat.cpp"
 
 namespace py = pybind11;
 

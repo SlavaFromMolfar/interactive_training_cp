@@ -55,7 +55,8 @@ if __name__ == '__main__':
     random_ferns.print()
 
     # Classifier set initialization
-    classifier_set = ClassifierSet()
+    # classifier_set = ClassifierSet()
+    classifier_set = detect.ClassifierSet()
 
     while True:
         ret, frame = cap.read()

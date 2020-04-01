@@ -1,5 +1,5 @@
 #include "../wrappers/NumpyToCvMat.h"
-//#include "../wrappers/cvMatToNumpy.cpp"
+#include "../wrappers/cvMatToNumpy.h"
 
 // fern maps
 cv::Mat fern_maps(const cv::Mat &img, RandomFerns* RFs){
@@ -79,14 +79,16 @@ cv::Mat fern_maps(const cv::Mat &img, RandomFerns* RFs){
 };
 
 
-//py::array_t<unsigned short int> fern_maps_np(py::array_t<unsigned char> &image, RandomFerns* randomFerns) {
-//    cv::Mat img = NumpyToCvMat::numpyToMat(image);
-//    cv::Mat fern_map = fern_maps(img, randomFerns);
-//    py::array_t<unsigned short int> result = cvMatToNumpyUnsignedShortInt(fern_map);
-//    return result;
-//}
+py::array_t<unsigned short int> fern_maps_np(py::array_t<unsigned char> &image, RandomFerns* randomFerns) {
+    auto numpy = new cvMatToNumpy();
+    auto np = new NumpyToCvMat();
+    cv::Mat img = np->numpyToMat(image);
+    cv::Mat fern_map = fern_maps(img, randomFerns);
+    py::array_t<unsigned short int> result = numpy->cvMatToNumpyUnsignedShortInt(fern_map);
+    return result;
+}
 
 
 void fernMaps(py::module &module) {
-//    module.def("fern_maps", &fern_maps_np);
+    module.def("fern_maps", &fern_maps_np);
 }

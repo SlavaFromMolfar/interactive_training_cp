@@ -32,9 +32,16 @@ public:
     pybind11::array_t<double> get_ratHstms_np();  // pointer to ratio of fern distributions
     void set_threshold(float beta);  // set detector threshold (beta)
     void update(cv::Mat &mapx, float y);  // update the object classifier
+    void update_py(pybind11::array_t<unsigned short int> fern_map, float y);  // update the object classifier
     void set_object_size(int Bu, int Bv);  // set object size (Bu,Bv)
     void get_object_size(int& Bu, int& Bv);  // return object size (Bu,Bv)
     void compute(int J, int R, int M, int S);  // compute the object classifier
+    pybind11::array_t<unsigned char> get_object_model();
+    void set_object_model(pybind11::array_t<unsigned char> object_model);
+    void set_object_height(int height);
+    int get_object_height();
+    void set_object_width(int width);
+    int get_object_width();
 };
 
 

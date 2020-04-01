@@ -4,19 +4,6 @@
 
 namespace py = pybind11;
 
-void update_pos_samples() {
-    std::cout << "update_pos_samples" << std::endl;
-}
-
-void update_neg_samples() {
-    std::cout << "update_neg_samples" << std::endl;
-}
-
-void update_samples(py::module &m) {
-    m.def("update_positive_samples", &update_pos_samples);
-    m.def("update_negative_samples", &update_neg_samples);
-}
-
 
 // update classifier using positive smaples
 void fun_update_positive_samples(const cv::Mat &img, CvRect rec, Classifier* clfr, RandomFerns* RFs, int updSamps, float varphi){
@@ -59,7 +46,7 @@ void fun_update_positive_samples(const cv::Mat &img, CvRect rec, Classifier* clf
         if ((vb-va)>minSize && (ub-ua)>minSize){
             std::cout << "rec.y - " << rec.y << ", rec.x - " << rec.x << ", rec.height - " << rec.height << ", rec.width" << rec.width << std::endl;
             std::cout << "min size " << minSize << " vb-va " << (vb - va) << " ub - ua  "
-                 << (ub - ua) << " va " << va << " ua " << ua << " vb " << vb << " ub " << ub << std::endl;
+                      << (ub - ua) << " va " << va << " ua " << ua << " vb " << vb << " ub " << ub << std::endl;
 
             // new bounding box
             newRec = cvRect(va, ua, vb-va, ub-ua);
@@ -77,3 +64,19 @@ void fun_update_positive_samples(const cv::Mat &img, CvRect rec, Classifier* clf
         }
     }
 };
+
+
+void update_pos_samples(py::array_t<unsigned short int> &fern_map, float label) {
+    std::cout << "update_pos_samples" << std::endl;
+}
+
+void update_neg_samples() {
+    std::cout << "update_neg_samples" << std::endl;
+}
+
+void update_samples(py::module &m) {
+    m.def("update_positive_samples", &update_pos_samples,
+            py::arg("image"),
+            py::arg("rectangle"));
+    m.def("update_negative_samples", &update_neg_samples);
+}

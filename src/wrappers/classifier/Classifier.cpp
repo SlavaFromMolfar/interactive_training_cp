@@ -49,6 +49,24 @@ void Classifier::get_object_size(int& Bu, int& Bv){
     Bv = this->objWidth;
 }
 
+void Classifier::set_object_height(int height){
+    this->objHeight = height;
+}
+
+int Classifier::get_object_height(){
+    auto h = this->objHeight;
+    return h;
+}
+
+void Classifier::set_object_width(int width){
+    this->objWidth = width;
+}
+
+int Classifier::get_object_width(){
+    auto h = this->objWidth;
+    return h;
+}
+
 // get num. random ferns (J)
 int Classifier::get_num_ferns(){
     return this->numFerns;
@@ -65,7 +83,8 @@ cv::Mat Classifier::get_posHstms(){
 }
 
 py::array_t<double> Classifier::get_posHstms_np(){
-    py::array_t<double> result = cvMatToNumpyDouble(this->posHstms);
+    auto numpy = new cvMatToNumpy();
+    py::array_t<double> result = numpy->cvMatToNumpyDouble(this->posHstms);
     return result;
 }
 
@@ -75,7 +94,8 @@ cv::Mat Classifier::get_negHstms(){
 }
 
 py::array_t<double> Classifier::get_negHstms_np() {
-    py::array_t<double> result = cvMatToNumpyDouble(this->negHstms);
+    auto numpy = new cvMatToNumpy();
+    py::array_t<double> result = numpy->cvMatToNumpyDouble(this->negHstms);
     return result;
 }
 
@@ -85,7 +105,8 @@ cv::Mat Classifier::get_ratHstms(){
 }
 
 py::array_t<double> Classifier::get_ratHstms_np(){
-    py::array_t<double> result = cvMatToNumpyDouble(this->ratHstms);
+    auto numpy = new cvMatToNumpy();
+    py::array_t<double> result = numpy->cvMatToNumpyDouble(this->ratHstms);
     return result;
 }
 
@@ -177,7 +198,59 @@ void Classifier::update(cv::Mat &fernMaps, float label){
         // ratio fern distribution
         pos = *(posPtr + j*this->numBins + z);
         neg = *(negPtr + j*this->numBins + z);
-        std::cout << "pos: " << pos << " neg: " << neg << " pos/(pos+neg): " << pos / (pos + neg) << std::endl;
+        *(ratPtr + j*this->numBins + z) = pos/(pos+neg);
+    }
+}
+
+// update the classifier
+void Classifier::update_py(py::array_t<unsigned short int> fern_map, float label){
+    // inputs:
+    // fernMaps: ferns outputs over an image sample x
+    // label: class label (y = {+1,-1}) for the sample x
+
+    // variables
+    int u,v,w,z;  // fern location (u,v), fern parameters (omega), fern output (z)
+    float pos,neg;  // positive and negative values
+
+    auto numpy = new NumpyToCvMat();
+    auto fernMaps = numpy->numpyToMatShortInt(fern_map);
+
+    // fern map size
+    int poolSize = fernMaps.channels();  // pool size (num. fern features parameters)
+    int imgWidth = fernMaps.cols;  // image width (Iv)
+    int imgHeight = fernMaps.rows;  // image height (Iu)
+
+    // pointer to classifier data, ferns maps, and positive, negative and ratio ferns distributions
+    auto *dataPtr = (unsigned char*)(this->data.data);
+    auto *mapsPtr = (unsigned short*)(fernMaps.data);
+    auto* posPtr = this->posHstms.ptr<float>(0);
+    auto* negPtr = this->negHstms.ptr<float>(0);
+    auto* ratPtr = this->ratHstms.ptr<float>(0);
+
+    // update random ferns
+    for (int j=0; j<this->numFerns; j++){
+
+        // fern parameters
+        u = (int)*(dataPtr + j*3 + 0);  // location u
+        v = (int)*(dataPtr + j*3 + 1);  // location v
+        w = (int)*(dataPtr + j*3 + 2);  // features parameters
+
+        // fern output
+        z = (int)*(mapsPtr + u*imgWidth*poolSize + v*poolSize + w);
+
+        // update positive fern distribution
+        if (label==1.0) {
+            *(posPtr + j*this->numBins + z)+= 1.0;
+        }
+
+        // update negative fern distribution
+        if (label==-1.0) {
+            *(negPtr + j*this->numBins + z)+= 1.0;
+        }
+
+        // ratio fern distribution
+        pos = *(posPtr + j*this->numBins + z);
+        neg = *(negPtr + j*this->numBins + z);
         *(ratPtr + j*this->numBins + z) = pos/(pos+neg);
     }
 }
@@ -190,4 +263,15 @@ void Classifier::print(){
     std::cout << "* num. random ferns -> " << this->numFerns << std::endl;
     std::cout << "* classifier threshold -> " << this->beta << std::endl;
     std::cout << "*********************************************************\n" << std::endl;
+}
+
+pybind11::array_t<unsigned char> Classifier::get_object_model() {
+    auto numpy = new cvMatToNumpy;
+    auto result = numpy->cvMatToNumpyInt(this->objModel);
+    return result;
+}
+void Classifier::set_object_model(pybind11::array_t<unsigned char> object_model) {
+    auto mat = new NumpyToCvMat();
+    auto o_m = mat->numpyToMat(object_model);
+    this->objModel = o_m;
 }
