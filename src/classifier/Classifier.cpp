@@ -170,9 +170,9 @@ void Classifier::update(cv::Mat &fernMaps, float label){
     // pointer to classifier data, ferns maps, and positive, negative and ratio ferns distributions
     auto *dataPtr = (unsigned char*)(this->data.data);
     auto *mapsPtr = (unsigned short*)(fernMaps.data);
-    auto* posPtr = this->posHstms.ptr<float>(0);
-    auto* negPtr = this->negHstms.ptr<float>(0);
-    auto* ratPtr = this->ratHstms.ptr<float>(0);
+    auto *posPtr = this->posHstms.ptr<float>(0);
+    auto *negPtr = this->negHstms.ptr<float>(0);
+    auto *ratPtr = this->ratHstms.ptr<float>(0);
 
     // update random ferns
     for (int j=0; j<this->numFerns; j++){

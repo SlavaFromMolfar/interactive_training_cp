@@ -13,6 +13,7 @@
 #include "wrappers/cvMatToNumpy.cpp"
 #include "wrappers/NumpyToCvMat.cpp"
 #include "classifier/classifier.cpp"
+#include "detection/detectionInit.cpp"
 
 namespace py = pybind11;
 
@@ -22,4 +23,5 @@ PYBIND11_MODULE(detect, m) {
     classifier(m);
     randomFerns(m);
     fernMaps(m);
+    detectionInit(m);
 }

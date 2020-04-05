@@ -7,7 +7,7 @@ import detect
 
 
 def update_negative_samples(frame, rectangle, classifier, random_ferns, train_samples, varphi):
-    start_time = time.time()
+    # start_time = time.time()
     min_size = 20
     neg_label = -1.0
 
@@ -40,12 +40,12 @@ def update_negative_samples(frame, rectangle, classifier, random_ferns, train_sa
 
                 f_map = detect.fern_maps(patch, random_ferns)
                 classifier.update(f_map, neg_label)
-        end_time = time.time() - start_time
-        print('update_neg_samples time - {}'.format(end_time))
+        # end_time = time.time() - start_time
+        # print('update_neg_samples time - {}'.format(end_time))
 
 
 def update_positive_samples(frame, rectangle, classifier, random_ferns, train_samples, varphi):
-    start_time = time.time()
+    # start_time = time.time()
     min_size = 20
     pos_label = 1.0
 
@@ -72,8 +72,8 @@ def update_positive_samples(frame, rectangle, classifier, random_ferns, train_sa
             patch = cv2.resize(frame[ua: ub, va: vb], (rows, cols))
             f_maps = detect.fern_maps(patch, random_ferns)
             classifier.update(f_maps, pos_label)
-        end_time = time.time() - start_time
-        print('update_pos_samples time - {}'.format(end_time))
+        # end_time = time.time() - start_time
+        # print('update_pos_samples time - {}'.format(end_time))
 
 
 def train_classifier(parameters, classifier, random_ferns, frame, rectangle):
@@ -97,9 +97,15 @@ def train_classifier(parameters, classifier, random_ferns, frame, rectangle):
                               (object_model_size, object_model_size))
     classifier.set_object_model(object_model)
 
+    start_time = time.time()
     update_positive_samples(frame, rectangle, classifier, random_ferns, train_samples, varphi)
+    end_time = time.time() - start_time
+    print(end_time)
 
+    start_time = time.time()
     update_negative_samples(object_model, rectangle, classifier, random_ferns, train_samples, varphi)
+    end_time = time.time() - start_time
+    print(end_time)
 
 
 def train_step(parameters, classifier_set, random_ferns, frame, rectangle):
