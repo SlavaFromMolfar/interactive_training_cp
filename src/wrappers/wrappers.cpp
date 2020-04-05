@@ -1,6 +1,5 @@
 #include "listToCvRect.cpp"
 #include "cvMatToNumpy.h"
-#include "classifier/classifier.cpp"
 
 
 void init_wrappers(py::module &module) {

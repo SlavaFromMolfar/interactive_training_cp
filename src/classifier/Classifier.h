@@ -17,7 +17,7 @@ private:
     cv::Mat ratHstms;  // ratio of fern histograms
 public:
     Classifier();
-    Classifier(float beta, int numBins, int numFerns, int objWidth, int objHeight);
+//    Classifier(float beta, int numBins, int numFerns, int objWidth, int objHeight);
     ~Classifier();
     void print();  // print classifier parameters
     cv::Mat objModel;  // object model (image)

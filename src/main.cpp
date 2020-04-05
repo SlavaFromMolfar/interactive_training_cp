@@ -12,6 +12,7 @@
 #include "wrappers/cvMatToNumpy.h"
 #include "wrappers/cvMatToNumpy.cpp"
 #include "wrappers/NumpyToCvMat.cpp"
+#include "classifier/classifier.cpp"
 
 namespace py = pybind11;
 

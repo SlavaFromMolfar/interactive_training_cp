@@ -1,5 +1,4 @@
 #include "ClassifierSet.h"
-#include "Classifier.h"
 
 // ClassifierSet
 // constructor
@@ -36,10 +35,10 @@ int ClassifierSet::get_num_max_classifiers(){
     return this->numMaxClfrs;
 };
 // get classifier
-Classifier* ClassifierSet::get_classifier(int k){
+Classifier ClassifierSet::get_classifier(int k){
     // inputs:
     // k: classifier index in the list of all classifiers
-    Classifier *clfr = &this->clfrs[k];
+    Classifier clfr = this->clfrs[k];
     return clfr;
 };
 // set num. classifiers (K)

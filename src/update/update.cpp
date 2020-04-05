@@ -1,5 +1,5 @@
 #include <pybind11/pybind11.h>
-#include "../wrappers/classifier/Classifier.h"
+#include "../classifier/Classifier.h"
 #include "../randomFerns/RandomFerns.h"
 
 namespace py = pybind11;

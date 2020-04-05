@@ -22,13 +22,13 @@ void classifier(py::module &m) {
             .def("set_object_width", &Classifier::set_object_width,
                     py::arg("width"))
             .def(py::init<>())
-            .def(py::init<float, int, int, int, int>(),
-                    py::arg("beta") = 0.5,
-                    py::arg("numBins") = 128,
-                    py::arg("numFerns") = 100,
-                    py::arg("objWidth") = 24,
-                    py::arg("objHeight") = 24
-            )
+//            .def(py::init<float, int, int, int, int>(),
+//                    py::arg("beta") = 0.5,
+//                    py::arg("numBins") = 128,
+//                    py::arg("numFerns") = 100,
+//                    py::arg("objWidth") = 24,
+//                    py::arg("objHeight") = 24
+//            )
             .def("compute", &Classifier::compute,
                     py::arg("J"),
                     py::arg("R"),

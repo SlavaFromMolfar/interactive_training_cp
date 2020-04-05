@@ -91,7 +91,6 @@ def train_classifier(parameters, classifier, random_ferns, frame, rectangle):
     classifier.compute(parameters.get_num_ferns(), random_ferns.getPoolSize(), random_ferns.getNumFeats(),
                        random_ferns.getFernSize())
     classifier.print()
-    # cv2.waitKey(0)
 
     object_model = cv2.resize(frame[rectangle[1]:rectangle[1] + rectangle[3],
                               rectangle[0]: rectangle[0] + rectangle[2]],
