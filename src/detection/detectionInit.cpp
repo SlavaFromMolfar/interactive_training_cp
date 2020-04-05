@@ -34,8 +34,8 @@ void detectionInit(py::module &m) {
                  py::arg("value"))
             .def("get_detection", &DetectionSet::get_detection,
                  py::arg("index"), py::return_value_policy::reference)
-//            .def("remove_detections", &DetectionSet::remove_detections,
-//                 py::arg("det"))
+            .def("remove_detections", &DetectionSet::remove_detections,
+                 py::arg("det"))
             .def("add_detections", &DetectionSet::add_detections,
                  py::arg("dets"))
             .def("get_max_detection", &DetectionSet::get_max_detection,
