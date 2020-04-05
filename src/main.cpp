@@ -14,6 +14,8 @@
 #include "wrappers/NumpyToCvMat.cpp"
 #include "classifier/classifier.cpp"
 #include "detection/detectionInit.cpp"
+#include "functions/detect.cpp"
+#include "integralImage/integralImage.cpp"
 
 namespace py = pybind11;
 
@@ -24,4 +26,6 @@ PYBIND11_MODULE(detect, m) {
     randomFerns(m);
     fernMaps(m);
     detectionInit(m);
+    detectionFunctionInit(m);
+    integralImage(m);
 }
