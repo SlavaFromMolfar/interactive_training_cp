@@ -4,6 +4,7 @@ import concurrent.futures
 
 from classifier.ClassifierSet import ClassifierSet
 from functions.train import train_step
+from functions.test import test_step
 from parameters.Parameters import Parameters
 from random_ferns.RandomFerns import RandomFerns
 
@@ -60,6 +61,7 @@ if __name__ == '__main__':
 
     while True:
         ret, frame = cap.read()
+        detection_set = detect.DetectionSet()
 
         cv2.imshow('Video', frame)
 
@@ -77,6 +79,9 @@ if __name__ == '__main__':
             flag_training = False
             flag_detection = True
             train_step(parameters, classifier_set, random_ferns, frame, rectangle)
+
+        if flag_detection:
+            test_step(classifier_set, random_ferns, frame, detection_set)
 
         if cv2.waitKey(1) & 0xff is ord('q'):
             break

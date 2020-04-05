@@ -11,14 +11,6 @@ Classifier::Classifier() {
 
 Classifier::~Classifier() = default;
 
-//Classifier::Classifier(float beta, int numBins, int numFerns, int objWidth, int objHeight) {
-//    this->beta = beta;
-//    this->numBins = numBins;
-//    this->numFerns = numFerns;
-//    this->objWidth = objWidth;
-//    this->objHeight = objHeight;
-//}
-
 // get threshold (beta)
 float Classifier::get_threshold(){
     return this->beta;
