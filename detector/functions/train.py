@@ -38,8 +38,8 @@ def update_negative_samples(frame, rectangle, classifier, random_ferns, train_sa
         if vb - va > min_size and ub - ua > min_size:
                 patch = cv2.resize(frame[va: vb, ua: ub], (width, height))
 
-                fern_map = detect.fern_maps(patch, random_ferns)
-                classifier.update(fern_map, neg_label)
+                f_map = detect.fern_maps(patch, random_ferns)
+                classifier.update(f_map, neg_label)
         end_time = time.time() - start_time
         print('update_neg_samples time - {}'.format(end_time))
 

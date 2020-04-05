@@ -46,5 +46,5 @@ void classifier(py::module &m) {
             .def("set_num_classifiers", &ClassifierSet::set_num_classifiers,
                     py::arg("K"))
             .def("get_classifier", &ClassifierSet::get_classifier,
-                    py::arg("K"));
+                    py::arg("K"), py::return_value_policy::reference);
 }

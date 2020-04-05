@@ -16,7 +16,7 @@ public:
     int get_num_classifiers();  // return num. classifiers (K)
     int get_num_max_classifiers();  // return num. max. classifiers
     void set_num_classifiers(int K);  // set num. classifiers (K)
-    Classifier get_classifier(int k);  // return indexed classifier
+    Classifier* get_classifier(int k);  // return indexed classifier
 };
 
 #endif //DET_CLASSIFIERSET_H
